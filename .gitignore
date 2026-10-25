@@ -1,0 +1,40 @@
+# Built application files
+*.apk
+*.apks
+*.aar
+*.bundle
+*.dex
+
+# Files for signing
+*.jks
+*.keystore
+
+# Generated build output
+/build/
+/app/build/
+build/
+
+# IDE files
+.gradle/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Local configuration & API Keys (Crucial for Supabase secrets)
+/local.properties
+local.properties
+
+# Native libraries
+.externalNativeBuild/
+.cxx/
+
+# Kotlin compiler cache
+.kotlin/
+
+# Agent artifacts
+.artifacts/
+
+# Logs
+*.log
+captures/
