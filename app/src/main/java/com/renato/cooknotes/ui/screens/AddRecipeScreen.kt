@@ -3,6 +3,7 @@ package com.renato.cooknotes.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -159,7 +160,7 @@ fun AddRecipeScreen(
             }
             item {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(10.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -182,37 +183,35 @@ fun AddRecipeScreen(
                 ) {
                     Icon(Icons.Default.Add, contentDescription = "Agregar paso")
                 }
-                if (listFases.isNotEmpty()) {
-                    this@LazyColumn.item {
-                        FlowRow(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            listFases.forEach { fase ->
-                                InputChip(
-                                    selected = false,
-                                    onClick = { },
-                                    label = { Text(fase) },
-                                    modifier = Modifier.fillMaxWidth(),
-                                    trailingIcon = {
-                                        IconButton(
-                                            onClick = {
-                                                listFases.remove(fase)
-                                            },
-                                            modifier = Modifier.size(18.dp)
-                                        ) {
-                                            Icon(Icons.Default.Close, contentDescription = "Eliminar")
-                                        }
-                                    }
-                                )
-                            }
-                        }
+                this@LazyColumn.itemsIndexed(
+                    items = listFases,
+                    key = { index, _ -> index }
+                ){ index, pasoText ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(10.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = "${index + 1}",
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+                    IconButton(
+                        onClick = {listFases.remove(pasoText)},
+                        modifier = Modifier.size(18.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.Close,
+                            contentDescription = "Eliminar",
+                            tint = MaterialTheme.colorScheme.error
+                        )
                     }
                 }
 
             }
             item {
+                Spacer(modifier = Modifier.height(16.dp))
                 PrimaryButton(
                     text = if (formState.isLoading) "Guardando..." else "Guardar Receta",
                     onClick = {
